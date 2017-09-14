@@ -1,0 +1,75 @@
+{{ '<?php' }}
+
+
+namespace {{ event.namespace }}\Processor\Event;
+
+use {{ event.abstract.namespace }};
+use Codingbeard\Framework\Module\Service\Event\Message\CodingbeardServicePrePurchaseEventMessage;
+use Codingbeard\Framework\Module\Service\Form\Exception\InvalidServiceFormInputException;
+
+class {{ event.name }} extends {{ event.abstract.name }}
+
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getGroup()
+  {
+    return "{{ message.identifier.group }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getName()
+  {
+    return "{{ message.identifier.name }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return CodingbeardServicePrePurchaseEventMessage
+
+   */
+  public function getMessageClass()
+  {
+    return new CodingbeardServicePrePurchaseEventMessage;
+  }
+
+  /**
+   * This event will be called after the user submits a form to purchase a service, but before the order is created or queued for processing.
+   * Relationships and spam clicking/refreshes will be checked at the abstract event
+   * This event should: Perform any custom checks, such as free allowance remaining
+   *
+   * @param CodingbeardServicePrePurchaseEventMessage $message
+   *
+   * @return bool
+   */
+  public function process(CodingbeardServicePrePurchaseEventMessage $message)
+  {
+    $this->log("Starting to process Event Message " . get_class($message));
+
+    $this->validate($message);
+
+    return true;
+  }
+
+  /**
+   * Do any validation you might need to in here, for example checking post data
+   *
+   * @param CodingbeardServicePrePurchaseEventMessage $message
+   *
+   * @return CodingbeardServicePrePurchaseEventMessage
+   * @throws InvalidServiceFormInputException
+   */
+  public function validate(CodingbeardServicePrePurchaseEventMessage $message)
+  {
+    return $message;
+  }
+
+}

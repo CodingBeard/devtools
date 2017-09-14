@@ -1,0 +1,60 @@
+{{ '<?php' }}
+
+namespace {{ provider.namespace }};
+
+use Codingbeard\Framework\Module\Service\Provider\Message\CodingbeardServiceProviderMessage;
+use {{ provider.abstract.namespace }};
+
+class {{ provider.name }} extends {{ provider.abstract.class }}
+
+{
+  /**
+   * @param CodingbeardServiceProviderMessage $message
+   */
+  public function provisionService($message)
+  {
+  }
+
+  /**
+   * @param CodingbeardServiceProviderMessage $message
+   */
+  public function retryProvisionService($message)
+  {
+  }
+
+  /**
+   * @param CodingbeardServiceProviderMessage $message
+   */
+  public function checkStatus($message)
+  {
+  }
+
+  /**
+   * @param CodingbeardServiceProviderMessage $message
+   */
+  public function suspendService($message)
+  {
+  }
+
+  /**
+   * @param CodingbeardServiceProviderMessage $message
+   */
+  public function unsuspendService($message)
+  {
+  }
+
+  /**
+   * @param CodingbeardServiceProviderMessage $message
+   */
+  public function cancelService($message)
+  {
+  }
+
+  /**
+   * @param CodingbeardServiceProviderMessage $message
+   */
+  public function uncancelService($message)
+  {
+  }
+
+}

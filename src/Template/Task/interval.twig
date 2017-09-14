@@ -1,0 +1,40 @@
+{{ '<?php' }}
+
+
+namespace {{ interval.namespace }}\Processor\Interval;
+
+use {{ interval.abstract.namespace }};
+
+class {{ interval.name }} extends {{ interval.abstract.class }}
+
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getGroup()
+  {
+    return "{{ interval.identifier.group }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getName()
+  {
+    return "{{ interval.identifier.name }}";
+  }
+
+  /**
+   * @return bool
+   */
+  public function process()
+  {
+
+    return true;
+  }
+
+}

@@ -1,0 +1,77 @@
+{{ '<?php' }}
+
+
+namespace {{ event.namespace }}\Task\Event;
+
+use {{ event.abstract.namespace }};
+use Codingbeard\Framework\Module\Service\Event\Message\CodingbeardServiceUnsuspendedEventMessage;
+
+class {{ event.name }} extends {{ event.abstract.name }}
+
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getGroup()
+  {
+    return "{{ message.identifier.group }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getName()
+  {
+    return "{{ message.identifier.name }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getProcessorName()
+  {
+    return "{{ message.identifier.name }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return CodingbeardServiceUnsuspendedEventMessage
+
+   */
+  public function getMessageClass()
+  {
+    return new CodingbeardServiceUnsuspendedEventMessage;
+  }
+
+  /**
+   * This event will be called when the billing provider (or a support agent) has unsuspended the service.
+   * Unless you disable it, the codingbeard version of this event will attempt to call Unsuspend on the provider used to suspend it.
+   * If you do disable it, make sure to replicate any of the other logic it executes (E.G. Order Status)
+   *
+   * @param CodingbeardServiceUnsuspendedEventMessage $message
+   *
+   * @return bool
+   */
+  public function process(CodingbeardServiceUnsuspendedEventMessage $message)
+  {
+    $this->log("Starting to process Event Message " . get_class($message));
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isSync()
+  {
+    return false;
+  }
+
+}

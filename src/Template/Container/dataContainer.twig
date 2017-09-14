@@ -1,0 +1,46 @@
+{{ '<?php' }}
+
+
+namespace {{ container.namespace }};
+
+{% for repository in container.repositories %}
+use {{ repository.namespace }};
+{% endfor %}
+use {{ container.abstract.namespace }};
+
+class {{ container.name }} extends {{ container.abstract.class }}
+
+{
+{% for repository in container.repositories %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @var {{ repository.name }}
+
+   */
+  protected ${{ repository.prefix|lcfirst }};
+
+{% endfor %}
+
+{% for repository in container.repositories %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ repository.name }}
+
+   */
+  public function get{{ repository.prefix }}()
+  {
+    if (!$this->{{ repository.prefix|lcfirst }})
+    {
+      $this->{{ repository.prefix|lcfirst }} = (new {{ repository.name }}())
+        ->setProduct($this->getProduct());
+    }
+
+    return $this->{{ repository.prefix|lcfirst }};
+  }
+
+{% endfor %}
+
+
+}

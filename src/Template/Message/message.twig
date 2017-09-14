@@ -1,0 +1,97 @@
+{{ '<?php' }}
+
+
+namespace {{ message.namespace }}\Message;
+
+use Codingbeard\Framework\Module\Message\AbstractMessage;
+{% for use in message.uses %}
+use {{ use }};
+{% endfor %}
+
+class {{ message.name }} extends AbstractMessage
+{
+{% for property in message.properties %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @var {{ property.type }}
+
+   */
+  protected ${{ property.name }};
+
+{% endfor %}
+
+{% for property in message.properties %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ property.type }}
+
+   */
+  public function get{{ property.name|ucfirst }}()
+  {
+    return $this->{{ property.name }};
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ property.type }} ${{ property.name }}
+
+   *
+   * @return {{ message.name }}
+
+   */
+  public function set{{ property.name|ucfirst }}(${{ property.name }})
+  {
+    $this->{{ property.name }} = ${{ property.name }};
+
+    return $this;
+  }
+
+{% endfor %}
+
+  /**
+   * @devtoolsOverwritable
+   */
+  public function preSerialize()
+  {
+{% for property in message.properties %}
+{% if property.type == 'Carbon' %}
+    if ($this->{{ property.name }} instanceof Carbon)
+    {
+      $this->{{ property.name }} = $this->{{ property.name }}->toDateTimeString();
+    }
+
+{% elseif substr(property.type, -4) == 'Enum' %}
+    if ($this->{{ property.name }} instanceof {{ property.type }})
+    {
+      $this->{{ property.name }} = $this->{{ property.name }}->getValue();
+    }
+
+{% endif %}
+{% endfor %}
+  }
+
+  /**
+   * @devtoolsOverwritable
+   */
+  public function postUnserialize()
+  {
+{% for property in message.properties %}
+{% if property.type == 'Carbon' %}
+    if (is_string($this->{{ property.name }}))
+    {
+      $this->{{ property.name }} = new Carbon($this->{{ property.name }});
+    }
+
+{% elseif substr(property.type, -4) == 'Enum' %}
+    if (!$this->{{ property.name }} instanceof {{ property.type }})
+    {
+      $this->{{ property.name }} = {{ property.type }}::get($this->{{ property.name }});
+    }
+
+{% endif %}
+{% endfor %}
+  }
+}

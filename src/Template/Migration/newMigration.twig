@@ -1,0 +1,56 @@
+{{ '<?php' }}
+
+
+namespace Codingbeard\Migrations;
+
+use Codingbeard\Framework\Module\Migrant\Schema;
+use Codingbeard\Framework\Module\Migrant\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class {{ migration.name }} extends Migration
+{
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::database('{{ database.name }}')->table(
+      '{{ table.name }}',
+      function (Blueprint $table)
+      {
+{% for column in table.columns.new %}
+{% if column.name == 'id' %}
+        $table->integer('id', true);
+{% elseif column.type == 'int' %}
+        $table->integer('{{ column.name }}');
+        //$table->integer('{{ column.name }}')->index('{{ column.name }}');
+{% elseif column.type == 'string' %}
+        $table->string('{{ column.name }}');
+{% elseif column.type == 'datetime' %}
+        $table->datetime('{{ column.name }}');
+{% endif %}
+{% endfor %}
+        $table->create();
+      }
+    );
+  }
+
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::database('{{ database.name }}')->table(
+      '{{ table.name }}',
+      function (Blueprint $table)
+      {
+        $table->drop();
+      }
+    );
+  }
+}

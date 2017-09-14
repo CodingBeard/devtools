@@ -1,0 +1,99 @@
+{{ '<?php' }}
+
+
+namespace {{ project.namespace }}\Service\{{ service.code }};
+
+use Codingbeard\Framework\Module\Service\AbstractCodingbeardService;
+use Codingbeard\Framework\Module\Service\Event\CodingbeardServiceEventInterface;
+use Codingbeard\Framework\Module\Service\Provider\CodingbeardServiceProviderInterface;
+use Codingbeard\Framework\Module\Service\Relation\CodingbeardServiceRelationInterface;
+use {{ project.namespace }}\Service\{{ service.code }}\Processor\Event\{{ event.prefix }}PreOrderProcessEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Processor\Event\{{ event.prefix }}PostOrderProcessEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Processor\Event\{{ event.prefix }}PrePurchaseEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Processor\Event\{{ event.prefix }}PostPurchaseEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Task\Event\{{ event.prefix }}ServiceAddedEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Task\Event\{{ event.prefix }}ServiceCancelledEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Task\Event\{{ event.prefix }}ServicePaidEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Task\Event\{{ event.prefix }}ServiceSuspendedEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Task\Event\{{ event.prefix }}ServiceUncancelledEvent;
+use {{ project.namespace }}\Service\{{ service.code }}\Task\Event\{{ event.prefix }}ServiceUnsuspendedEvent;
+{% for provider in service.providers %}
+use {{ project.namespace }}\Service\{{ service.code }}\Provider\{{ provider.name }}\{{ provider.name }}{{ service.code }}Provider;
+{% endfor %}
+{% for use in service.uses %}
+use {{ use }};
+{% endfor %}
+
+class {{ project.namespace|lower|ucfirst }}{{ service.code }}Service extends AbstractCodingbeardService
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * ServiceCode
+   */
+  const CODE = '{{ service.code }}';
+
+{% for alias in service.aliases %}
+  /** @devtoolsOverwritable */
+  const ALIAS_{{ alias|strtoupper }} = '{{ alias }}';
+{% endfor %}
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * Use this function to define your service's providers
+   *
+   * @internal
+   * @return CodingbeardServiceProviderInterface[]
+   */
+  public function defineProviders()
+  {
+    return [
+{% for provider in service.providers %}
+      new {{ provider.name }}{{ service.code }}Provider(),
+{% endfor %}
+    ];
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * Use this function to define the relationships this service has with other
+   * services.
+   *
+   * @internal
+   * @return CodingbeardServiceRelationInterface[]
+   */
+  public function defineRelations()
+  {
+{% for relation in service.relations %}
+    $this->{{ relation.type }}({{ relation.name }});
+{% endfor %}
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * Use this function to define the event processors used for this service
+   * that will be executed at points throughout the order process
+   *
+   * @internal
+   * @return CodingbeardServiceEventInterface[]
+   */
+  public function defineEvents()
+  {
+    return [
+      //new {{ service.code }}PrePurchaseEvent(),
+      //new {{ service.code }}PostPurchaseEvent(),
+      //new {{ service.code }}PreOrderProcessEvent(),
+      //new {{ service.code }}PostOrderProcessEvent(),
+      //new {{ service.code }}ServiceAddedEvent(),
+      //new {{ service.code }}ServicePaidEvent(),
+      //new {{ service.code }}ServiceSuspendedEvent(),
+      //new {{ service.code }}ServiceUnsuspendedEvent(),
+      //new {{ service.code }}ServiceCancelledEvent(),
+      //new {{ service.code }}ServiceUncancelledEvent()
+    ];
+  }
+
+}

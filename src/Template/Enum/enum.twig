@@ -1,0 +1,33 @@
+{{ '<?php' }}
+
+
+namespace {{ enum.namespace }};
+
+use Codingbeard\Framework\Module\Enum\AbstractEnum;
+
+/**
+{% for constant in enum.constants %}
+ * @method static {{ enum.name }} {{ constant.name }}
+
+{% endfor %}
+ */
+class {{ enum.name }} extends AbstractEnum
+{
+{% for constant in enum.constants %}
+  /** @devtoolsOverwritable */
+  const {{ constant.name }} = '{{ constant.value }}';
+{% endfor %}
+
+{% for constant in enum.constants %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return bool
+   */
+  public function is{{ constant.name|lower|camel }}()
+  {
+    return $this->is(self::{{ constant.name }});
+  }
+
+{% endfor %}
+}

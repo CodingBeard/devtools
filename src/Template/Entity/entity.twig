@@ -1,0 +1,55 @@
+{{ '<?php' }}
+
+
+namespace {{ entity.namespace }};
+
+{% for use in entity.uses %}
+use {{ use }};
+{% endfor %}
+use Codingbeard\Framework\Module\Module\Entity\AbstractEntity;
+
+class {{ entity.name }} extends AbstractEntity
+
+{
+{% for property in entity.properties %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @var {{ property.type }}
+
+   */
+  protected ${{ property.name }};
+
+{% endfor %}
+
+{% for property in entity.properties %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ property.type }}
+
+   */
+  public function get{{ property.name|ucfirst }}()
+  {
+    return $this->{{ property.name }};
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ property.type }} ${{ property.name }}
+
+   *
+   * @return {{ entity.name }}
+
+   */
+  public function set{{ property.name|ucfirst }}(${{ property.name }})
+  {
+    $this->{{ property.name }} = ${{ property.name }};
+
+    return $this;
+  }
+
+{% endfor %}
+
+}

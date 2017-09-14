@@ -1,0 +1,59 @@
+{{ '<?php' }}
+
+
+namespace {{ processor.namespace }}\Processor;
+
+use Codingbeard\Framework\Module\Processor\Exception\RequiredValueMissingException;
+use {{ message.namespace }}\Message\{{ message.name }};
+use {{ processor.abstract.namespace }};
+
+class {{ processor.name }} extends {{ processor.abstract.class }}
+
+{
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ message.name }}
+
+   */
+  public function getMessageClass()
+  {
+    return new {{ message.name }};
+  }
+
+  /**
+   * @param {{ message.name }} $message
+   *
+   * @return bool
+   */
+  public function process({{ message.name }} $message)
+  {
+    $this->validate($message);
+
+    return true;
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ message.name }} $message
+   *
+   * @throws RequiredValueMissingException
+   * @returns {{ message.name }}
+
+   */
+  public function validate({{ message.name }} $message)
+  {
+{% for property in message.properties %}
+    if (empty($message->get{{ property.name|ucfirst }}()))
+    {
+      throw new RequiredValueMissingException('{{ property.name }}');
+    }
+
+{% endfor %}
+
+    return $message;
+  }
+
+}

@@ -1,0 +1,76 @@
+{{ '<?php' }}
+
+
+namespace {{ event.namespace }}\Task\Event;
+
+use {{ event.abstract.namespace }};
+use Codingbeard\Framework\Module\Service\Event\Message\CodingbeardServiceAddedEventMessage;
+
+class {{ event.name }} extends {{ event.abstract.name }}
+
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getGroup()
+  {
+    return "{{ message.identifier.group }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getName()
+  {
+    return "{{ message.identifier.name }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return string
+   */
+  public function getProcessorName()
+  {
+    return "{{ message.identifier.name }}";
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return CodingbeardServiceAddedEventMessage
+
+   */
+  public function getMessageClass()
+  {
+    return new CodingbeardServiceAddedEventMessage;
+  }
+
+  /**
+   * This event will be called when the billing provider is aware that the user has purchased this service.
+   * This does not guarantee that the invoice has been generated or paid.
+   *
+   * @param CodingbeardServiceAddedEventMessage $message
+   *
+   * @return bool
+   */
+  public function process(CodingbeardServiceAddedEventMessage $message)
+  {
+    $this->log("Starting to process Event Message " . get_class($message));
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isSync()
+  {
+    return false;
+  }
+
+}

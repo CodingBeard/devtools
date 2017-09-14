@@ -1,0 +1,221 @@
+{{ '<?php' }}
+
+
+namespace {{ repository.namespace }};
+
+use Codingbeard\Framework\Module\Enum\AbstractEnum;
+{% for use in repository.uses %}
+use {{ use }};
+{% endfor %}
+use Codingbeard\Framework\Module\Module\Repository\AbstractRepository;
+
+class {{ repository.name }} extends AbstractRepository
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * @var {{ model.name }}
+
+   */
+  protected $model;
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ model.name }}
+
+   */
+  protected function getModel()
+  {
+    if (!$this->model)
+    {
+      $this->model = new {{ model.name }}();
+    }
+
+    return $this->model;
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ collection.name }}
+
+   */
+  public function getAll()
+  {
+    return $this->toCollection($this->getModel()->getAll());
+  }
+
+{% for column in repository.columns %}
+{% if column.unique %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {% if column.entityType %}{{ column.entityType }}{% else %}{{ column.type }}{% endif %} ${{ column.name|lcfirst }}
+
+   *
+   * @return {{ entity.name }}
+
+{% if column.name|strtolower != 'id' %}
+   * @deprecated Remove this if in use and indexes have been considered
+{% endif %}
+   */
+  public function getFirstBy{{ column.name|ucfirst }}(${{ column.name|lcfirst }})
+  {
+    return $this->toEntity(
+      $this
+      ->getModel()
+      ->getFirstBy{{ column.name|ucfirst }}(${{ column.name|lcfirst }}{% if substr(column.entityType, -4) == 'Enum' %}->getValue(){% endif %})
+    );
+  }
+
+{% else %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {% if column.entityType %}{{ column.entityType }}{% else %}{{ column.type }}{% endif %} ${{ column.name|lcfirst }}
+
+   *
+   * @return {{ collection.name }}
+
+   * @deprecated Remove this if in use and indexes have been considered
+   */
+  public function getAllBy{{ column.name|ucfirst }}(${{ column.name|lcfirst }})
+  {
+    return $this->toCollection(
+      $this
+      ->getModel()
+      ->getAllBy{{ column.name|ucfirst }}(${{ column.name|lcfirst }}{% if substr(column.entityType, -4) == 'Enum' %}->getValue(){% endif %})
+    );
+  }
+
+{% endif %}
+{% endfor %}
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ entity.name }}
+
+   */
+  public function getEntity()
+  {
+    return new {{ entity.name }}();
+  }
+
+  /**
+   * @param {{ entity.name }} $entity
+   *
+   * @return {{ model.name }}
+   */
+  protected function toModel($entity)
+  {
+    $model = clone $this->getModel();
+
+{% for column in repository.columns %}
+{% if column.entityType == 'Carbon' %}
+    if ($entity->get{{ column.name|ucfirst }}() instanceof Carbon)
+    {
+      $model->{{ column.name }} = $entity->get{{ column.name|ucfirst }}()->toDateTimeString();
+    }
+{% elseif substr(column.entityType, -4) == 'Enum' %}
+    if ($entity->get{{ column.name|ucfirst }}() instanceof AbstractEnum)
+    {
+      $model->{{ column.name }} = $entity->get{{ column.name|ucfirst }}()->getValue();
+    }
+{% else %}
+    $model->{{ column.name }} = $entity->get{{ column.name|ucfirst }}();
+{% endif %}
+{% endfor %}
+
+    return $model;
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ entity.name }} $entity
+   *
+   * @return {{ entity.name }}
+
+   */
+  public function persist($entity)
+  {
+    $model = $this->toModel($entity);
+    $model->save();
+
+    return $entity->setId($model->id);
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ model.name }} $model
+   *
+   * @return {{ entity.name }}
+
+   */
+  protected function toEntity($model)
+  {
+    if (!$model)
+    {
+      return false;
+    }
+
+    return $this->getEntity()
+{% for column in repository.columns %}
+{% if column.entityType == 'Carbon' %}
+      ->set{{ column.name|ucfirst }}($model->{{ column.name }} ? new Carbon($model->{{ column.name }}) : null)
+{% elseif substr(column.entityType, -4) == 'Enum' %}
+{% if column.type == 'int' %}
+      ->set{{ column.name|ucfirst }}($this->get{{ column.entityType }}((int)$model->{{ column.name }}))
+{% else %}
+      ->set{{ column.name|ucfirst }}($this->get{{ column.entityType }}($model->{{ column.name }}))
+{% endif %}
+{% else %}
+      ->set{{ column.name|ucfirst }}($model->{{ column.name }})
+{% endif %}
+{% endfor %};
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ model.name }}[] $models
+   *
+   * @return {{ collection.name }}
+
+   */
+  protected function toCollection($models)
+  {
+    $collection = new {{ collection.name }}();
+
+    if ($models)
+    {
+      foreach ($models as $key => $model)
+      {
+        $collection->offsetSet($key, $this->toEntity($model));
+      }
+    }
+
+    return $collection;
+  }
+
+{% for column in repository.columns %}
+{% if substr(column.entityType, -4) == 'Enum' %}
+  /**
+  * @devtoolsOverwritable
+  *
+  * @param mixed $value
+  *
+  * @return {{ column.entityType }}
+
+  */
+  public function get{{ column.entityType }}($value)
+  {
+    return {{ column.entityType }}::get($value);
+  }
+{% endif %}
+{% endfor %}
+
+}

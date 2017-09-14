@@ -1,0 +1,22 @@
+{{ '<?php' }}
+
+
+namespace {{ model.namespace }};
+
+use Codingbeard\Framework\Module\Phalcon\Mvc\CodingbeardModel;
+use {{ model.abstract.modelServiceEnum.namespace }};
+
+class {{ model.name }} extends CodingbeardModel
+{
+  /** @var string */
+  public $serviceName = {{ model.abstract.modelServiceEnum.class }}::{{ model.database|strtoupper }};
+
+  /**
+   * @return string
+   */
+  public function getSchema()
+  {
+    return "{{ model.database }}";
+  }
+}
+

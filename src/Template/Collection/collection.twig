@@ -1,0 +1,47 @@
+{{ '<?php' }}
+
+
+namespace {{ collection.namespace }};
+
+use Codingbeard\Framework\Module\Module\Collection\AbstractCollection;
+use Codingbeard\Framework\Module\Module\Collection\BaseCollectionInterface;
+use {{ collection.namespace }}\{{ entity.name }};
+
+/**
+ * @devtoolsOverwritable
+ *
+ * @see BaseCollectionInterface for help
+ * @method {{ entity.name }}[] getAll()
+ * @method {{ entity.name }} get($offset)
+ * @method {{ entity.name }} first()
+ * @method {{ entity.name }}Collection filter(callable $filterCallback)
+ */
+class {{ entity.name }}Collection extends AbstractCollection
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param int $key
+   * @param {{ entity.name }} ${{ entity.name|lcfirst }}
+
+   *
+   * @return {{ entity.name }}Collection
+   */
+  public function offsetSet($key, {{ entity.name }} ${{ entity.name|lcfirst }})
+  {
+    return $this->internalOffsetSet($key, ${{ entity.name|lcfirst }});
+  }
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ entity.name }}Collection $collection
+   *
+   * @return {{ entity.name }}Collection
+   */
+  public function merge({{ entity.name }}Collection $collection)
+  {
+    return $this->internalMerge($collection);
+  }
+
+}

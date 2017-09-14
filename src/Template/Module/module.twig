@@ -1,0 +1,90 @@
+{{ '<?php' }}
+
+
+namespace {{ module.namespace }};
+
+use {{ module.abstract.namespace }};
+use {{ module.namespace }}\Container\{{ module.classPrefix }}DataContainer;
+use {{ module.namespace }}\Container\{{ module.classPrefix }}HandlerContainer;
+use {{ module.namespace }}\Container\{{ module.classPrefix }}ProcessorContainer;
+use Codingbeard\Framework\Module\Processor\ProcessorInterface;
+
+class {{ module.name }} extends {{ module.abstract.class }}
+
+{
+  /** @var {{ module.classPrefix }}DataContainer */
+  protected $dataContainer;
+
+  /** @var {{ module.classPrefix }}HandlerContainer */
+  protected $handlerContainer;
+
+  /** @var {{ module.classPrefix }}ProcessorContainer */
+  protected $processorContainer;
+
+  /**
+   * @inheritdoc
+   */
+  public function init()
+  {
+    return true;
+  }
+
+  /**
+   * @return string
+   */
+  public function getName()
+  {
+    return '{{ module.classPrefix }}';
+  }
+
+  /**
+   * @return {{ module.classPrefix }}DataContainer
+   */
+  public function getData()
+  {
+    if (!$this->dataContainer)
+    {
+      $this->dataContainer = (new {{ module.classPrefix }}DataContainer())
+        ->setProduct($this->getProduct());
+    }
+
+    return $this->dataContainer;
+  }
+
+  /**
+   * @return {{ module.classPrefix }}HandlerContainer
+   */
+  public function getHandler()
+  {
+    if (!$this->handlerContainer)
+    {
+      $this->handlerContainer = (new {{ module.classPrefix }}HandlerContainer())
+        ->setProduct($this->getProduct());
+    }
+
+    return $this->handlerContainer;
+  }
+
+  /**
+   * @return {{ module.classPrefix }}ProcessorContainer
+   */
+  public function getProcessor()
+  {
+    if (!$this->processorContainer)
+    {
+      $this->processorContainer = (new {{ module.classPrefix }}ProcessorContainer())
+        ->setProduct($this->getProduct());
+    }
+
+    return $this->processorContainer;
+  }
+
+  /** @return ProcessorInterface[] */
+  public function getTasks()
+  {
+    return $this
+      ->getProcessor()
+      ->getProcessorSetupHandler()
+      ->getProcessors();
+  }
+}

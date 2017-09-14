@@ -1,0 +1,129 @@
+{{ '<?php' }}
+
+
+namespace {{ model.namespace }};
+
+use {{ module.namespace }}\Library\Abstract{{ module.name }}Model;
+
+class {{ model.name }} extends Abstract{{ module.name }}Model
+{
+  /**
+   * @devtoolsOverwritable
+   *
+   * @var string
+   */
+  public $tableName = "{{ repository.table }}";
+
+{% for property in model.properties %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @var {{ property.type }}
+
+   */
+  public ${{ property.name }};
+
+{% endfor %}
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @return {{ model.name }}[]
+   */
+  public function getAll()
+  {
+    return self::find();
+  }
+
+{% for property in model.properties %}
+{% if property.unique %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ property.type }} ${{ property.name }}
+
+   *
+   * @return {{ model.name }}
+
+   */
+  public function getFirstBy{{ property.name|ucfirst }}(${{ property.name }})
+  {
+    return self::findFirst(
+      [
+        "{{ property.name }} = :{{ property.name }}:",
+        "bind" => ["{{ property.name }}" => ${{ property.name }}],
+      ]
+    );
+  }
+
+{% else %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ property.type }} ${{ property.name }}
+
+   *
+   * @return {{ model.name }}[]
+   */
+  public function getAllBy{{ property.name|ucfirst }}(${{ property.name }})
+  {
+    return self::find(
+      [
+        "{{ property.name }} = :{{ property.name }}:",
+        "bind" => ["{{ property.name }}" => ${{ property.name }}],
+      ]
+    );
+  }
+
+{% endif %}
+{% endfor %}
+
+{% for properties in model.doubles %}
+{% if properties.one.unique AND properties.two.unique %}
+
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ properties.one.type }} ${{ properties.one.name }}
+
+   * @param {{ properties.two.type }} ${{ properties.two.name }}
+
+   *
+   * @return {{ model.name }}
+
+   */
+  public function getFirstBy{{ properties.one.name|ucfirst }}And{{ properties.two.name|ucfirst }}(${{ properties.one.name }}, ${{ properties.two.name }})
+  {
+    return self::findFirst(
+      [
+        "{{ properties.one.name }} = :{{ properties.one.name }}: AND {{ properties.two.name }} = :{{ properties.two.name }}:",
+        "bind" => ["{{ properties.one.name }}" => ${{ properties.one.name }}, "{{ properties.two.name }}" => ${{ properties.two.name }}],
+      ]
+    );
+  }
+
+{% else %}
+  /**
+   * @devtoolsOverwritable
+   *
+   * @param {{ properties.one.type }} ${{ properties.one.name }}
+
+   * @param {{ properties.two.type }} ${{ properties.two.name }}
+
+   *
+   * @return {{ model.name }}[]
+   */
+  public function getAllBy{{ properties.one.name|ucfirst }}And{{ properties.two.name|ucfirst }}(${{ properties.one.name }}, ${{ properties.two.name }})
+  {
+    return self::find(
+      [
+        "{{ properties.one.name }} = :{{ properties.one.name }}: AND {{ properties.two.name }} = :{{ properties.two.name }}:",
+        "bind" => ["{{ properties.one.name }}" => ${{ properties.one.name }}, "{{ properties.two.name }}" => ${{ properties.two.name }}],
+      ]
+    );
+  }
+
+{% endif %}
+{% endfor %}
+
+}

@@ -1,0 +1,73 @@
+#!/usr/bin/php
+<?php
+
+use Codingbeard\Devtools\Command\GenerateCollectionCommand;
+use Codingbeard\Devtools\Command\GenerateModuleCommand;
+use Codingbeard\Devtools\Command\GenerateCronCommand;
+use Codingbeard\Devtools\Command\GenerateEntityCommand;
+use Codingbeard\Devtools\Command\GenerateEnumCommand;
+use Codingbeard\Devtools\Command\GenerateIntervalCommand;
+use Codingbeard\Devtools\Command\GenerateMessageEventCommand;
+use Codingbeard\Devtools\Command\GenerateMessageCommand;
+use Codingbeard\Devtools\Command\GenerateEventCommand;
+use Codingbeard\Devtools\Command\GenerateProcessorCommand;
+use Codingbeard\Devtools\Command\GenerateServiceCommand;
+use Codingbeard\Devtools\Command\GenerateSingleCommand;
+use Codingbeard\Devtools\Command\GenerateWorkerCommand;
+use Codingbeard\Devtools\Command\GenerateModelCommand;
+use Codingbeard\Devtools\Command\GenerateMessageWorkerCommand;
+use Codingbeard\Devtools\Command\RefactorReplaceReturnThisCommand;
+use Symfony\Component\Console\Application;
+
+define('CURRENT_DIR', rtrim(getcwd(), '/') . '/');
+
+include __DIR__ . '/../../../autoload.php';
+
+$app = new Application();
+
+$app->add(new GenerateCollectionCommand());
+$app->add(new GenerateModuleCommand());
+$app->add(new GenerateCronCommand());
+$app->add(new GenerateEntityCommand());
+$app->add(new GenerateEnumCommand());
+$app->add(new GenerateEventCommand());
+$app->add(new GenerateIntervalCommand());
+$app->add(new GenerateMessageCommand());
+$app->add(new GenerateMessageEventCommand());
+$app->add(new GenerateMessageWorkerCommand());
+$app->add(new GenerateModelCommand());
+$app->add(new GenerateProcessorCommand());
+$app->add(new GenerateServiceCommand());
+$app->add(new GenerateSingleCommand());
+$app->add(new GenerateWorkerCommand());
+
+$app->add(new RefactorReplaceReturnThisCommand());
+
+$ignore = [
+  'help',
+  'list'
+];
+
+$i = 1;
+
+foreach ($app->all() as $key => &$command)
+{
+  if (in_array($key, $ignore))
+  {
+    continue;
+  }
+
+  $description = $command->getDescription();
+  $description = str_replace(['<comment>', '</comment>'], '', $description);
+
+  if ($i++ % 2 == 0)
+  {
+    $command->setDescription('<comment>' . $description . '</comment>');
+  }
+  else
+  {
+    $command->setDescription($description);
+  }
+}
+
+$app->run();
