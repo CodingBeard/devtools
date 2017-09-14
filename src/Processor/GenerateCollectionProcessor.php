@@ -11,9 +11,8 @@ use Codingbeard\Devtools\Message\GenerateCollectionMessage;
 /**
  * @method ProductInterface getProduct()
  */
-class GenerateCollectionProcessor extends AbstractDevtoolProcessor implements ProcessorInterface
+class GenerateCollectionProcessor extends AbstractDevtoolProcessor
 {
-  use ProductAwareTrait;
 
   /**
    * @devtoolsOverwritable
@@ -63,19 +62,19 @@ class GenerateCollectionProcessor extends AbstractDevtoolProcessor implements Pr
    *
    * @param GenerateCollectionMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateCollectionMessage
    */
   public function validate(GenerateCollectionMessage $message)
   {
     if (empty($message->getCollectionNamespace()))
     {
-      throw new RequiredValueMissingException('collectionNamespace');
+      throw new \Exception('collectionNamespace');
     }
 
     if (empty($message->getEntityName()))
     {
-      throw new RequiredValueMissingException('entityName');
+      throw new \Exception('entityName');
     }
 
     $message->setCollectionNamespace(rtrim($message->getCollectionNamespace(), '\\'));

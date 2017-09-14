@@ -12,9 +12,7 @@ use Codingbeard\Devtools\Message\GenerateEventMessage;
  * @method ProductInterface getProduct()
  */
 class GenerateEventProcessor extends AbstractDevtoolProcessor
-  implements ProcessorInterface
 {
-  use ProductAwareTrait;
 
   /**
    * @devtoolsOverwritable
@@ -172,24 +170,24 @@ class GenerateEventProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateEventMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateEventMessage
    */
   public function validate(GenerateEventMessage $message)
   {
     if (empty($message->getGroupname()))
     {
-      throw new RequiredValueMissingException('groupname');
+      throw new \Exception('groupname');
     }
 
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getProperties()))
     {
-      throw new RequiredValueMissingException('properties');
+      throw new \Exception('properties');
     }
 
     $message->setNamespace(rtrim($message->getNamespace(), '\\'));

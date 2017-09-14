@@ -65,24 +65,24 @@ class GenerateSingleProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateSingleMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateSingleMessage
    */
   public function validate(GenerateSingleMessage $message)
   {
     if (empty($message->getGroupName()))
     {
-      throw new RequiredValueMissingException('groupName');
+      throw new \Exception('groupName');
     }
 
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getTaskName()))
     {
-      throw new RequiredValueMissingException('taskName');
+      throw new \Exception('taskName');
     }
 
     return $message;

@@ -45,7 +45,7 @@ class {{ module.name }} extends {{ module.abstract.class }}
     if (!$this->dataContainer)
     {
       $this->dataContainer = (new {{ module.classPrefix }}DataContainer())
-        ->setProduct($this->getProduct());
+        ->setBeard($this->getBeard());
     }
 
     return $this->dataContainer;
@@ -59,7 +59,7 @@ class {{ module.name }} extends {{ module.abstract.class }}
     if (!$this->handlerContainer)
     {
       $this->handlerContainer = (new {{ module.classPrefix }}HandlerContainer())
-        ->setProduct($this->getProduct());
+        ->setBeard($this->getBeard());
     }
 
     return $this->handlerContainer;
@@ -73,7 +73,7 @@ class {{ module.name }} extends {{ module.abstract.class }}
     if (!$this->processorContainer)
     {
       $this->processorContainer = (new {{ module.classPrefix }}ProcessorContainer())
-        ->setProduct($this->getProduct());
+        ->setBeard($this->getBeard());
     }
 
     return $this->processorContainer;

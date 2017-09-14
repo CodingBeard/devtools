@@ -81,29 +81,29 @@ class GenerateIntervalProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateIntervalMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateIntervalMessage
    */
   public function validate(GenerateIntervalMessage $message)
   {
     if (empty($message->getGroupName()))
     {
-      throw new RequiredValueMissingException('groupName');
+      throw new \Exception('groupName');
     }
 
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getTaskName()))
     {
-      throw new RequiredValueMissingException('taskName');
+      throw new \Exception('taskName');
     }
 
     if (empty($message->getInterval()))
     {
-      throw new RequiredValueMissingException('interval');
+      throw new \Exception('interval');
     }
 
 

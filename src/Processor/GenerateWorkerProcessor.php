@@ -153,29 +153,29 @@ class GenerateWorkerProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateWorkerMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateWorkerMessage
    */
   public function validate(GenerateWorkerMessage $message)
   {
     if (empty($message->getGroupname()))
     {
-      throw new RequiredValueMissingException('groupname');
+      throw new \Exception('groupname');
     }
 
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getWorkerName()))
     {
-      throw new RequiredValueMissingException('workerName');
+      throw new \Exception('workerName');
     }
 
     if (empty($message->getProperties()))
     {
-      throw new RequiredValueMissingException('properties');
+      throw new \Exception('properties');
     }
 
     $message->setNamespace(rtrim($message->getNamespace(), '\\'));

@@ -73,24 +73,24 @@ class GenerateEnumProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateEnumMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateEnumMessage
    */
   public function validate(GenerateEnumMessage $message)
   {
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getEnumName()))
     {
-      throw new RequiredValueMissingException('enumName');
+      throw new \Exception('enumName');
     }
 
     if (empty($message->getConstants()))
     {
-      throw new RequiredValueMissingException('constants');
+      throw new \Exception('constants');
     }
 
     $message->setNamespace(rtrim($message->getNamespace(), '\\'));

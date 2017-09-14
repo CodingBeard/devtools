@@ -379,7 +379,7 @@ class GenerateServiceProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateServiceMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @throws InvalidMessageValueException
    * @returns GenerateServiceMessage
    */
@@ -387,7 +387,7 @@ class GenerateServiceProcessor extends AbstractDevtoolProcessor
   {
     if (empty($message->getServiceCode()))
     {
-      throw new RequiredValueMissingException('serviceCode');
+      throw new \Exception('serviceCode');
     }
 
     return $message;

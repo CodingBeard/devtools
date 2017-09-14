@@ -59,19 +59,19 @@ class GenerateAbstractModelProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateAbstractModelMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateAbstractModelMessage
    */
   public function validate(GenerateAbstractModelMessage $message)
   {
     if (empty($message->getModuleNamespace()))
     {
-      throw new RequiredValueMissingException('moduleNamespace');
+      throw new \Exception('moduleNamespace');
     }
 
     if (empty($message->getDatabaseName()))
     {
-      throw new RequiredValueMissingException('tableName');
+      throw new \Exception('tableName');
     }
 
     $message->setModuleNamespace(rtrim($message->getModuleNamespace(), '\\'));

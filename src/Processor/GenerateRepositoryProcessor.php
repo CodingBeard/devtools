@@ -102,64 +102,64 @@ class GenerateRepositoryProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateRepositoryMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateRepositoryMessage
    */
   public function validate(GenerateRepositoryMessage $message)
   {
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getRepoName()))
     {
-      throw new RequiredValueMissingException('repoName');
+      throw new \Exception('repoName');
     }
 
     if (empty($message->getColumns()))
     {
-      throw new RequiredValueMissingException('columns');
+      throw new \Exception('columns');
     }
 
     if (empty($message->getModuleNamespace()))
     {
-      throw new RequiredValueMissingException('moduleNamespace');
+      throw new \Exception('moduleNamespace');
     }
 
     if (empty($message->getModuleName()))
     {
-      throw new RequiredValueMissingException('moduleName');
+      throw new \Exception('moduleName');
     }
 
     if (empty($message->getModelNamespace()))
     {
-      throw new RequiredValueMissingException('modelNamespace');
+      throw new \Exception('modelNamespace');
     }
 
     if (empty($message->getModelName()))
     {
-      throw new RequiredValueMissingException('modelName');
+      throw new \Exception('modelName');
     }
 
     if (empty($message->getEntityNamespace()))
     {
-      throw new RequiredValueMissingException('entityNamespace');
+      throw new \Exception('entityNamespace');
     }
 
     if (empty($message->getEntityName()))
     {
-      throw new RequiredValueMissingException('entityName');
+      throw new \Exception('entityName');
     }
 
     if (empty($message->getCollectionNamespace()))
     {
-      throw new RequiredValueMissingException('collectionNamespace');
+      throw new \Exception('collectionNamespace');
     }
 
     if (empty($message->getCollectionName()))
     {
-      throw new RequiredValueMissingException('collectionName');
+      throw new \Exception('collectionName');
     }
 
     $message->setNamespace(rtrim($message->getNamespace(), '\\'));

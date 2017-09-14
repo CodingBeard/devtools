@@ -15,6 +15,6 @@ class {{ container.name }} extends {{ container.abstract.class }}
   public function getProcessorSetupHandler()
   {
     return (new {{ container.classPrefix }}ProcessorSetupHandler())
-      ->setProduct($this->getProduct());
+      ->setBeard($this->getBeard());
   }
 }

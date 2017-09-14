@@ -12,9 +12,7 @@ use Codingbeard\Devtools\Message\GenerateEntityMessage;
  * @method ProductInterface getProduct()
  */
 class GenerateEntityProcessor extends AbstractDevtoolProcessor
-  implements ProcessorInterface
 {
-  use ProductAwareTrait;
 
   /**
    * @devtoolsOverwritable
@@ -98,24 +96,24 @@ class GenerateEntityProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateEntityMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateEntityMessage
    */
   public function validate(GenerateEntityMessage $message)
   {
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getEntityName()))
     {
-      throw new RequiredValueMissingException('entityName');
+      throw new \Exception('entityName');
     }
 
     if (empty($message->getProperties()))
     {
-      throw new RequiredValueMissingException('properties');
+      throw new \Exception('properties');
     }
 
     $message->setNamespace(rtrim($message->getNamespace(), '\\'));

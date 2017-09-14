@@ -35,19 +35,19 @@ class GenerateProviderProcessor extends AbstractVpnProcessor
    *
    * @param GenerateProviderMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateProviderMessage
    */
   public function validate(GenerateProviderMessage $message)
   {
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getProviderName()))
     {
-      throw new RequiredValueMissingException('providerName');
+      throw new \Exception('providerName');
     }
 
     $message->setNamespace(rtrim($message->getNamespace(), '\\'));

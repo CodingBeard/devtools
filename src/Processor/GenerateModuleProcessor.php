@@ -494,7 +494,7 @@ class GenerateModuleProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateModuleMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @throws InvalidMessageValueException
    * @returns GenerateModuleMessage
    */
@@ -502,7 +502,7 @@ class GenerateModuleProcessor extends AbstractDevtoolProcessor
   {
     if (empty($message->getBuildFile()))
     {
-      throw new RequiredValueMissingException('buildFile');
+      throw new \Exception('buildFile');
     }
 
     if (!is_file($message->getBuildFile()))
@@ -577,7 +577,7 @@ class GenerateModuleProcessor extends AbstractDevtoolProcessor
 
     if (count((array)$config->repositories))
     {
-      if (!count($config->repositories))
+      if (!count((array)$config->repositories))
       {
         die(
           "Missing module:repositories: array, example config: "
@@ -612,7 +612,7 @@ class GenerateModuleProcessor extends AbstractDevtoolProcessor
           );
         }
 
-        if (!count($repository->columns))
+        if (!count((array)$repository->columns))
         {
           die(
             "Missing module:name:repositories:{$name}:columns array, example config: "

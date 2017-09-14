@@ -2,9 +2,9 @@
 
 namespace Codingbeard\Devtools\Message;
 
-use Codingbeard\Framework\Module\Message\AbstractMessage;
 
-class GenerateEntityMessage extends AbstractMessage
+
+class GenerateEntityMessage
 {
   /**
    * @devtoolsOverwritable

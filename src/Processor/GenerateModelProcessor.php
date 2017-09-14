@@ -2,18 +2,10 @@
 namespace Codingbeard\Devtools\Processor;
 
 use Codingbeard\Devtools\Generator\DevtoolTemplateGenerator;
-use Codingbeard\Framework\Module\Processor\Exception\RequiredValueMissingException;
-use Codingbeard\Framework\Module\Processor\ProcessorInterface;
-use Codingbeard\Framework\Module\Product\ProductAwareTrait;
-use Codingbeard\Framework\Module\Product\ProductInterface;
 use Codingbeard\Devtools\Message\GenerateModelMessage;
 
-/**
- * @method ProductInterface getProduct()
- */
-class GenerateModelProcessor extends AbstractDevtoolProcessor implements ProcessorInterface
+class GenerateModelProcessor extends AbstractDevtoolProcessor
 {
-  use ProductAwareTrait;
 
   /**
    * @devtoolsOverwritable
@@ -121,39 +113,39 @@ class GenerateModelProcessor extends AbstractDevtoolProcessor implements Process
    *
    * @param GenerateModelMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateModelMessage
    */
   public function validate(GenerateModelMessage $message)
   {
     if (empty($message->getModuleNamespace()))
     {
-      throw new RequiredValueMissingException('moduleNamespace');
+      throw new \Exception('moduleNamespace');
     }
 
     if (empty($message->getModuleName()))
     {
-      throw new RequiredValueMissingException('moduleName');
+      throw new \Exception('moduleName');
     }
 
     if (empty($message->getRepositoryName()))
     {
-      throw new RequiredValueMissingException('repositoryName');
+      throw new \Exception('repositoryName');
     }
 
     if (empty($message->getTableName()))
     {
-      throw new RequiredValueMissingException('tableName');
+      throw new \Exception('tableName');
     }
 
     if (empty($message->getModelName()))
     {
-      throw new RequiredValueMissingException('modelName');
+      throw new \Exception('modelName');
     }
 
     if (empty($message->getProperties()))
     {
-      throw new RequiredValueMissingException('properties');
+      throw new \Exception('properties');
     }
 
     $message->setModuleNamespace(rtrim($message->getModuleNamespace(), '\\'));

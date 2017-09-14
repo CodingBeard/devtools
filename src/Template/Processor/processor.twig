@@ -39,7 +39,7 @@ class {{ processor.name }} extends {{ processor.abstract.class }}
    *
    * @param {{ message.name }} $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns {{ message.name }}
 
    */
@@ -48,7 +48,7 @@ class {{ processor.name }} extends {{ processor.abstract.class }}
 {% for property in message.properties %}
     if (empty($message->get{{ property.name|ucfirst }}()))
     {
-      throw new RequiredValueMissingException('{{ property.name }}');
+      throw new \Exception('{{ property.name }}');
     }
 
 {% endfor %}

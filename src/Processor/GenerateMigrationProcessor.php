@@ -76,8 +76,8 @@ If you wanted to rename a column instead then you'll have to modify the migratio
     {
       $name = sprintf(
         'Add%sTableTo%s',
-        studly_case($message->getTableName()),
-        studly_case($message->getDatabaseName())
+        ucfirst($message->getTableName()),
+        ucfirst($message->getDatabaseName())
       );
 
       $template = 'newMigration';
@@ -105,8 +105,8 @@ If you wanted to rename a column instead then you'll have to modify the migratio
     {
       $name = sprintf(
         'Update%sTableIn%s',
-        studly_case($message->getTableName()),
-        studly_case($message->getDatabaseName())
+        ucfirst($message->getTableName()),
+        ucfirst($message->getDatabaseName())
       );
 
       $template = 'updateMigration';
@@ -161,24 +161,24 @@ If you wanted to rename a column instead then you'll have to modify the migratio
    *
    * @param GenerateMigrationMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateMigrationMessage
    */
   public function validate(GenerateMigrationMessage $message)
   {
     if (empty($message->getDatabaseName()))
     {
-      throw new RequiredValueMissingException('databaseName');
+      throw new \Exception('databaseName');
     }
 
     if (empty($message->getTableName()))
     {
-      throw new RequiredValueMissingException('tableName');
+      throw new \Exception('tableName');
     }
 
     if (empty($message->getNewColumns()))
     {
-      throw new RequiredValueMissingException('newColumns');
+      throw new \Exception('newColumns');
     }
 
     return $message;

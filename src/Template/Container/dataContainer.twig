@@ -34,7 +34,7 @@ class {{ container.name }} extends {{ container.abstract.class }}
     if (!$this->{{ repository.prefix|lcfirst }})
     {
       $this->{{ repository.prefix|lcfirst }} = (new {{ repository.name }}())
-        ->setProduct($this->getProduct());
+        ->setBeard($this->getBeard());
     }
 
     return $this->{{ repository.prefix|lcfirst }};

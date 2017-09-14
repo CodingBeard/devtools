@@ -4,8 +4,8 @@ namespace Codingbeard\Devtools\Generator\Template;
 
 use Phalcon\DI;
 use Phalcon\Mvc\User\Module;
+use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
-use Codingbeard\Framework\Module\Phalcon\Mvc\View;
 
 class DevtoolTemplateEngine
 {

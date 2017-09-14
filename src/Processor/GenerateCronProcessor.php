@@ -81,29 +81,29 @@ class GenerateCronProcessor extends AbstractDevtoolProcessor
    *
    * @param GenerateCronMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateCronMessage
    */
   public function validate(GenerateCronMessage $message)
   {
     if (empty($message->getGroupName()))
     {
-      throw new RequiredValueMissingException('groupName');
+      throw new \Exception('groupName');
     }
 
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getTaskName()))
     {
-      throw new RequiredValueMissingException('taskName');
+      throw new \Exception('taskName');
     }
 
     if (empty($message->getSchedule()))
     {
-      throw new RequiredValueMissingException('schedule');
+      throw new \Exception('schedule');
     }
 
 

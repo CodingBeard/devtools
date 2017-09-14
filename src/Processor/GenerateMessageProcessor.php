@@ -11,9 +11,8 @@ use Codingbeard\Devtools\Message\GenerateMessageMessage;
 /**
  * @method ProductInterface getProduct()
  */
-class GenerateMessageProcessor extends AbstractDevtoolProcessor implements ProcessorInterface
+class GenerateMessageProcessor extends AbstractDevtoolProcessor
 {
-  use ProductAwareTrait;
 
   /**
    * @devtoolsOverwritable
@@ -92,24 +91,24 @@ class GenerateMessageProcessor extends AbstractDevtoolProcessor implements Proce
    *
    * @param GenerateMessageMessage $message
    *
-   * @throws RequiredValueMissingException
+   * @throws \Exception
    * @returns GenerateMessageMessage
    */
   public function validate(GenerateMessageMessage $message)
   {
     if (empty($message->getNamespace()))
     {
-      throw new RequiredValueMissingException('namespace');
+      throw new \Exception('namespace');
     }
 
     if (empty($message->getMessageName()))
     {
-      throw new RequiredValueMissingException('messageName');
+      throw new \Exception('messageName');
     }
 
     if (empty($message->getProperties()))
     {
-      throw new RequiredValueMissingException('properties');
+      throw new \Exception('properties');
     }
 
     $message->setNamespace(rtrim($message->getNamespace(), '\\'));
