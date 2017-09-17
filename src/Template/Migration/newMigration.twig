@@ -1,56 +1,27 @@
-{{ '<?php' }}
+BEGIN UP;
 
+USE {{ database.name }};
 
-namespace Codingbeard\Migrations;
-
-use Codingbeard\Framework\Module\Migrant\Schema;
-use Codingbeard\Framework\Module\Migrant\DB;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
-
-class {{ migration.name }} extends Migration
-{
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
-  public function up()
-  {
-    Schema::database('{{ database.name }}')->table(
-      '{{ table.name }}',
-      function (Blueprint $table)
-      {
+CREATE TABLE `{{ table.name }}` (
 {% for column in table.columns.new %}
 {% if column.name == 'id' %}
-        $table->integer('id', true);
+  `id` int(11) NOT NULL AUTO_INCREMENT,
 {% elseif column.type == 'int' %}
-        $table->integer('{{ column.name }}');
-        //$table->integer('{{ column.name }}')->index('{{ column.name }}');
+  `{{ column.name }}` int(11) NOT NULL,
 {% elseif column.type == 'string' %}
-        $table->string('{{ column.name }}');
+  `{{ column.name }}` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 {% elseif column.type == 'datetime' %}
-        $table->datetime('{{ column.name }}');
+  `{{ column.name }}` datetime NOT NULL,
 {% endif %}
 {% endfor %}
-        $table->create();
-      }
-    );
-  }
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-    Schema::database('{{ database.name }}')->table(
-      '{{ table.name }}',
-      function (Blueprint $table)
-      {
-        $table->drop();
-      }
-    );
-  }
-}
+END UP;
+
+BEGIN DOWN;
+
+USE {{ database.name }};
+DROP TABLE `{{ table.name }}`
+
+END DOWN;

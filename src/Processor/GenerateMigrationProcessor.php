@@ -131,7 +131,7 @@ If you wanted to rename a column instead then you'll have to modify the migratio
     $generator = new DevtoolTemplateGenerator($this->parentDir . '/migrations');
 
     $generator->generateFile(
-      date('Y_m_d_His_') . $name . '.php',
+      date('Y_m_d_His_') . $name . '.sql',
       'Migration',
       $template,
       [
