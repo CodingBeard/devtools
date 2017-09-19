@@ -1,4 +1,4 @@
-BEGIN UP;
+-- BEGIN UP;
 
 USE {{ database.name }};
 
@@ -17,11 +17,11 @@ CREATE TABLE `{{ table.name }}` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-END UP;
+-- END UP;
 
-BEGIN DOWN;
+-- BEGIN DOWN;
 
 USE {{ database.name }};
-DROP TABLE `{{ table.name }}`
+DROP TABLE `{{ table.name }}`;
 
-END DOWN;
+-- END DOWN;
