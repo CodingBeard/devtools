@@ -6,7 +6,7 @@ namespace {{ entity.namespace }};
 {% for use in entity.uses %}
 use {{ use }};
 {% endfor %}
-use Codingbeard\Framework\Module\Module\Entity\AbstractEntity;
+use Codingbeard\Framework\Module\Module\Library\Entity\AbstractEntity;
 
 class {{ entity.name }} extends AbstractEntity
 

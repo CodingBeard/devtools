@@ -3,10 +3,10 @@
 
 namespace {{ model.namespace }};
 
-use Codingbeard\Framework\Module\Phalcon\Mvc\CodingbeardModel;
+use Codingbeard\Framework\Module\Module\Library\Model\AbstractModel;
 use {{ model.abstract.modelServiceEnum.namespace }};
 
-class {{ model.name }} extends CodingbeardModel
+class {{ model.name }} extends AbstractModel
 {
   /** @var string */
   public $serviceName = {{ model.abstract.modelServiceEnum.class }}::{{ model.database|strtoupper }};

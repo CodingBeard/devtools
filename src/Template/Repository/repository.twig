@@ -7,7 +7,7 @@ use Codingbeard\Framework\Module\Enum\AbstractEnum;
 {% for use in repository.uses %}
 use {{ use }};
 {% endfor %}
-use Codingbeard\Framework\Module\Module\Repository\AbstractRepository;
+use Codingbeard\Framework\Module\Module\Library\Repository\AbstractRepository;
 
 class {{ repository.name }} extends AbstractRepository
 {
