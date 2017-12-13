@@ -5,13 +5,13 @@ namespace {{ container.namespace }};
 
 use {{ container.abstract.namespace }};
 use {{ container.moduleNamespace }}\Processor\{{ container.classPrefix }}ProcessorSetupHandler;
-use Codingbeard\Framework\Module\Module\Processor\ProcessorSetupHandlerInterface;
+use Codingbeard\Framework\Module\Module\Library\AbstractProcessorSetupHandler;
 
 class {{ container.name }} extends {{ container.abstract.class }}
 
 {
 
-  /** @return ProcessorSetupHandlerInterface */
+  /** @return AbstractProcessorSetupHandler */
   public function getProcessorSetupHandler()
   {
     return (new {{ container.classPrefix }}ProcessorSetupHandler())

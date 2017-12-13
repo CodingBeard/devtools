@@ -7,7 +7,7 @@ use {{ module.abstract.namespace }};
 use {{ module.namespace }}\Container\{{ module.classPrefix }}DataContainer;
 use {{ module.namespace }}\Container\{{ module.classPrefix }}HandlerContainer;
 use {{ module.namespace }}\Container\{{ module.classPrefix }}ProcessorContainer;
-use Codingbeard\Framework\Module\Processor\ProcessorInterface;
+use Codingbeard\Framework\Module\Module\Library\Setup\SetupHandlerInterface;
 
 class {{ module.name }} extends {{ module.abstract.class }}
 
@@ -32,7 +32,7 @@ class {{ module.name }} extends {{ module.abstract.class }}
   /**
    * @return string
    */
-  public function getName()
+  public static function getName()
   {
     return '{{ module.classPrefix }}';
   }
@@ -79,12 +79,22 @@ class {{ module.name }} extends {{ module.abstract.class }}
     return $this->processorContainer;
   }
 
-  /** @return ProcessorInterface[] */
-  public function getTasks()
+  /**
+   * @return string[]
+   */
+  public function getCliProcessors()
   {
     return $this
       ->getProcessor()
       ->getProcessorSetupHandler()
       ->getProcessors();
+  }
+
+  /**
+   * @return SetupHandlerInterface|bool
+   */
+  public function getSetupHandler()
+  {
+    return new {{ module.classPrefix }}SetupHandler();
   }
 }

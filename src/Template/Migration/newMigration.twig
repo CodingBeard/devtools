@@ -1,5 +1,7 @@
 -- BEGIN UP;
 
+CREATE DATABASE IF NOT EXISTS {{ database.name }} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 USE {{ database.name }};
 
 CREATE TABLE `{{ table.name }}` (
@@ -9,13 +11,13 @@ CREATE TABLE `{{ table.name }}` (
 {% elseif column.type == 'int' %}
   `{{ column.name }}` int(11) NOT NULL,
 {% elseif column.type == 'string' %}
-  `{{ column.name }}` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `{{ column.name }}` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 {% elseif column.type == 'datetime' %}
   `{{ column.name }}` datetime NOT NULL,
 {% endif %}
 {% endfor %}
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- END UP;
 

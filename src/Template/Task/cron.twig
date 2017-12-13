@@ -13,7 +13,7 @@ class {{ cron.name }} extends {{ cron.abstract.class }}
    *
    * @return string
    */
-  public function getGroup()
+  public static function getGroup()
   {
     return "{{ cron.identifier.group }}";
   }
@@ -23,9 +23,20 @@ class {{ cron.name }} extends {{ cron.abstract.class }}
    *
    * @return string
    */
-  public function getName()
+  public static function getName()
   {
     return "{{ cron.identifier.name }}";
+  }
+
+
+  /**
+  * @devtoolsOverwritable
+  *
+  * @return string
+  */
+  public static function getDescription()
+  {
+    return "";
   }
 
   /**

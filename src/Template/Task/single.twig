@@ -13,7 +13,7 @@ class {{ single.name }} extends {{ single.abstract.class }}
    *
    * @return string
    */
-  public function getGroup()
+  public static function getGroup()
   {
     return "{{ single.identifier.group }}";
   }
@@ -23,7 +23,7 @@ class {{ single.name }} extends {{ single.abstract.class }}
    *
    * @return string
    */
-  public function getName()
+  public static function getName()
   {
     return "{{ single.identifier.name }}";
   }
@@ -34,9 +34,9 @@ class {{ single.name }} extends {{ single.abstract.class }}
   *
   * @return string
   */
-  public function getDescription()
+  public static function getDescription()
   {
-    return "Single task";
+    return "";
   }
 
   /**
